@@ -44,9 +44,9 @@ public class HashMultiSetTest {
 	@Test
 	public void test3() {
 		
-		assertFalse(m.remove("a"));
-		assertFalse(m.remove("b",2));
-		assertTrue(m.remove("c",1));
+		assertTrue(m.remove("a"));
+		assertTrue(m.remove("b",2));
+		assertFalse(m.remove("c",1));
 		
 	
 		assertEquals(5, m.count("a"));
