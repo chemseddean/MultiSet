@@ -19,6 +19,7 @@ public class HashMultiSet<T> extends AbstractCollection<T> implements MultiSet<T
 		HashMap= new HashMap<T,Integer>();
 	}
 	
+	
 	public HashMultiSet(Collection<T> collect) {
 		
 		HashMap= new HashMap<T,Integer>();
