@@ -104,4 +104,18 @@ public class NaiveMultiSet<T> extends AbstractCollection<T> implements MultiSet<
 		}
 		
 	}
+
+	@Override
+	public boolean isConsistent() {
+		// TODO Auto-generated method stub
+		int size = 0;
+		int cpt;
+		for (T elt : this.elements()) {
+			cpt = count(elt);
+			if (cpt < 0)
+				return false;
+			size += cpt;
+		}
+		return size == this.size();
+	}
 }

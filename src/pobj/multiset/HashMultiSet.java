@@ -27,13 +27,16 @@ public class HashMultiSet<T> extends AbstractCollection<T> implements MultiSet<T
 			this.add(c);
 	}
 	
-	public boolean add(T e,int count) {
-
+	public boolean add(T e,int count){
+		if (count < 0) {
+			throw new InvalidCountException("La valeur du count doit etre strcitement positive");
+		}
+		try {
 		if (count==0)
 			return false;
 		
-		if (count==1)
-			this.add(e);
+//		if (count==1)
+//			this.add(e);
 		
 		int i = 0;
 		if (HashMap.containsKey(e)) {
@@ -45,34 +48,63 @@ public class HashMultiSet<T> extends AbstractCollection<T> implements MultiSet<T
 		
 		
 		HashMap.put(e, count+i);
-		
+		assert this.isConsistent();
+
 		return HashMap.get(e)==i+count; 
+		
+		} catch (IllegalArgumentException x) {
+			System.out.println(x.getMessage());
+			return false;
+		}
+		
+		
 	}
+	
 	
 	@Override
 	public boolean add(T e) {
 		
-		if (!HashMap.containsKey(e)) {
-			
-			return (HashMap.put(e, 1) == null) ;
-		}
-	return false;
+//		if (!HashMap.containsKey(e)) {
+//				Object countE = HashMap.get(e); 
+//				if (countE == null)
+//					HashMap.put(e, 1); 
+//				else
+//					HashMap.put(e, (int)countE + 1);
+//		}
+		this.add(e,1);
+	return true;
 	}
+	
 	
 	@Override
 	public boolean remove(Object e) {
 		// TODO Auto-generated method stub
+		try {
+		if (HashMap.containsKey(e)) {
 		Object res	=	HashMap.replace((T)e,HashMap.get(e)-1);
 		if (res == null )
 				return false;
-		
+		assert this.isConsistent();
+
 		return true;
-	}
+		}
+		else
+			assert this.isConsistent();
+			return false;
+		} catch(IllegalArgumentException x) {
+			System.out.println(x.getMessage());
+			assert this.isConsistent();
+			return false;
+	}}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean remove(Object e, int count) {
 		// TODO Auto-generated method stub
+		if (count < 0) {
+			throw new InvalidCountException("La valeur du count doit etre strcitement positive");
+		}
+		try {
 		Integer res= HashMap.get(e);/// get 
 		if( HashMap.containsKey(e)) {
 			if(count==1)
@@ -92,9 +124,15 @@ public class HashMultiSet<T> extends AbstractCollection<T> implements MultiSet<T
 			
 			HashMap.replace((T)e, HashMap.get(e) - count); 
 			
-		
+		assert this.isConsistent();
 		return true;
-
+		
+		
+		
+		} catch (IllegalArgumentException x) {
+			System.out.println(x.getMessage());
+			return false;
+		}
 	}
 	
 	@Override
@@ -220,5 +258,28 @@ public class HashMultiSet<T> extends AbstractCollection<T> implements MultiSet<T
 		}
 
 	}
+
 	
-}
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+			b.append("["); 
+		for(T e: this.elements()) {
+			b.append(e+":");
+			b.append(HashMap.get(e)+"; ");
+		}
+		b.append("]");
+		return b.toString(); 
+	}
+	
+	public boolean isConsistent() {
+		int size = 0;
+		int cpt;
+		for (T elt : this.elements()) {
+			cpt = count(elt);
+			if (cpt < 0)
+				return false;
+			size += cpt;
+		}
+		return size == this.size();
+	}
+	}

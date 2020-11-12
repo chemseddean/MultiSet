@@ -36,12 +36,14 @@ public class WordCount {
 		int nbAffiche = 10;
 		if(nbAffiche>list.size()) nbAffiche=list.size();
 		
-		String s = "";
+//		String s = "";
+//		
+//		for (int i=0; i<nbAffiche; i++) {
+//			s += list.get(i)+"  (" + ms.count(list.get(i))+" fois)\n";
+//		}
+//		System.out.println(s);
 		
-		for (int i=0; i<nbAffiche; i++) {
-			s += list.get(i)+"  (" + ms.count(list.get(i))+" fois)\n";
-		}
-		System.out.println(s);
+		System.out.println(ms.toString());
 		
 	}
 	

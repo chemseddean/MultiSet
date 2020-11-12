@@ -9,6 +9,7 @@ TME-4:
     pobj.multiset.test.HashMultiSetTest
     pobj.multiset.test.IteratorTest
     pobj.multiset.test.CollectionTest
+    pobj.multiset.test.HashMultiSetTest2
   artifacts:
     reports:
       junit: report.xml

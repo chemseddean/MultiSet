@@ -15,4 +15,5 @@ public interface MultiSet<T> {
 	List<T> elements();
 	Iterator<T> iterator();
 	public Comparator<T> getComparator();
+	public boolean isConsistent();
 }
